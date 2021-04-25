@@ -21,24 +21,31 @@ class LoginController extends Controller
         
         $usuario = User::where('username', $username)
                         ->first();
-        if($usuario){
-            if (Auth::attempt(['username' => $username, 'password' => $contrasena])) {
-                $user = $this->guard()->user();
-                return redirect()->intended($this->redirectPath());
+
+        return response()->json([
+            'respuesta' => true,
+            'mensaje'   => "mensaje correcto",
+            'datos'     => [],
+        ]);
+
+    //     if($usuario){
+    //         if (Auth::attempt(['username' => $username, 'password' => $contrasena])) {
+    //             $user = $this->guard()->user();
+    //             return redirect()->intended($this->redirectPath());
                 
-            }else{
-                return redirect()->back()
-                ->withInput()
-                ->withErrors([
-                    'login' => 'These credentials do not match our records.',
-                ]);
-            }
-        }else{
-            return redirect()->back()
-                ->withInput()
-                ->withErrors([
-                    'login' => 'These credentials do not match our records.',
-                ]);
-        }
+    //         }else{
+    //             return redirect()->back()
+    //             ->withInput()
+    //             ->withErrors([
+    //                 'login' => 'These credentials do not match our records.',
+    //             ]);
+    //         }
+    //     }else{
+    //         return redirect()->back()
+    //             ->withInput()
+    //             ->withErrors([
+    //                 'login' => 'These credentials do not match our records.',
+    //             ]);
+    //     }
     }
 }
