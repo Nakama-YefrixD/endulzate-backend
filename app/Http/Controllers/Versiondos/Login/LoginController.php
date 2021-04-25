@@ -32,7 +32,8 @@ class LoginController extends Controller
                         'name as pernombre',
                         'email',
                         'imagen',
-                        'remember_token as usutoken'
+                        'remember_token as usutoken',
+                        'password'
                     ]);
 
         if($usu){
@@ -56,6 +57,7 @@ class LoginController extends Controller
             'respuesta' => $respuesta,
             'mensaje'   => $mensaje,
             'datos'     => $datos,
+            'otros'     => $otros,
         ]);
     }
 }
