@@ -33,3 +33,10 @@ Route::get('/imprimir/venta/{idVenta}','impresiones\imprimirVentaController@impr
 Route::get('/imprimir/aperturarCaja/{idCajaVenta}','impresiones\imprimirAperturaCajaController@aperturarCaja');
 Route::get('/imprimir/cierreCaja/{idCajaVenta}','impresiones\imprimirCierreCajaController@cierreCaja');
 
+
+
+
+// VERSION 2
+
+
+Route::post('/versiondos/login', 'Versiondos\Login\LoginController@login');
