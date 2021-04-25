@@ -42,10 +42,6 @@ class LoginController extends Controller
                 $mensaje = "Bienvenido, ".$usu->username." es un gusto volver a verte por aquí";
                 $datos = $usu;
 
-                // $token = $request->session()->token();
-
-                $token = csrf_token();
-
             }else{
                 $respuesta = false;
                 $mensaje = "Lo sentimos, el usuario o contraseña es incorrecta";
@@ -59,7 +55,6 @@ class LoginController extends Controller
             'respuesta' => $respuesta,
             'mensaje'   => $mensaje,
             'datos'     => $datos,
-            'token'     => $token,
         ]);
     }
 }
