@@ -284,4 +284,4 @@ Route::get('/mostrar/{id}', 'panel\cajaVenta\cajaVentaController@tb_cajaVenta');
 
 // VERSION 2
 
-Route::post('/versiondos/login', 'Versiondos\Login\LoginControllerLoginController@login');
+Route::post('/versiondos/login', 'Versiondos\Login\LoginController@login');
