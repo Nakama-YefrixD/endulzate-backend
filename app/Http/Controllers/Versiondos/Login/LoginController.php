@@ -15,7 +15,7 @@ class LoginController extends Controller
         $respuesta = true;
         $mensaje = "Bienvenido, ";
         $datos = [];
-        $otros ="";
+        $token ="";
 
         $username   = $request->usuario;
         $contrasena = $request->contrasenia;
@@ -37,12 +37,14 @@ class LoginController extends Controller
                     ]);
 
         if($usu){
-            $otros = $usu->password;
-            $datos = $usu;
             if (Hash::check($contrasena, $usu->password)) {
 
                 $mensaje = "Bienvenido, ".$usu->username." es un gusto volver a verte por aquí";
                 $datos = $usu;
+
+                // $token = $request->session()->token();
+
+                $token = csrf_token();
 
             }else{
                 $respuesta = false;
@@ -57,7 +59,7 @@ class LoginController extends Controller
             'respuesta' => $respuesta,
             'mensaje'   => $mensaje,
             'datos'     => $datos,
-            'otros'     => $otros,
+            'token'     => $token,
         ]);
     }
 }
