@@ -15,9 +15,10 @@ class LoginController extends Controller
         $contrasena = $request->contrasenia;
 
         $this->validate($request, [
-            'username'    => 'required',
-            'password'    => 'required',
+            'usuario'    => 'required',
+            'contrasenia'    => 'required',
         ]);
+        
         $usuario = User::where('username', $username)
                         ->first();
         if($usuario){
