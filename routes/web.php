@@ -269,3 +269,19 @@ Route::get('/mostrar/{id}', 'panel\cajaVenta\cajaVentaController@tb_cajaVenta');
     Route::get('/caja/ingresos', 'panel\cajaVenta\ingresosController@index');
     Route::get('/caja/ingresos/tb_ingresos', 'panel\cajaVenta\ingresosController@tb_ingresos');
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+// VERSION 2
+
+Route::post('/versiondos/login', 'Versiondos\Login\LoginControllerLoginController@login');
