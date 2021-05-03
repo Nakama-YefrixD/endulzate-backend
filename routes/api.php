@@ -41,4 +41,5 @@ Route::get('/imprimir/cierreCaja/{idCajaVenta}','impresiones\imprimirCierreCajaC
 
 Route::post('/versiondos/login', 'Versiondos\Login\LoginController@login');
 
-Route::post('/versiondos/cargar-data/almacen', 'Versiondos\CargarData\AlmacenController@CargarDataAlmacen');
+// Route::post('/versiondos/cargar-data/almacen', 'Versiondos\CargarData\AlmacenController@CargarDataAlmacen');
+Route::post('/versiondos/cargar-data/almacen', 'Versiondos\CargarData\AlmacenController@CargarDataAlmacenv2');
