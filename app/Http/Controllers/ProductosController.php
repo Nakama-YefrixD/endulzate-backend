@@ -54,7 +54,7 @@ class ProductosController extends Controller
 
     public function eliminarProducto(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
             $idSucursal = 1;
@@ -99,7 +99,7 @@ class ProductosController extends Controller
 
     public function buscarProducto(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
 
     	if ($idUsuario == 1 || $idUsuario == 2) {
     		$idSucursal = 1;

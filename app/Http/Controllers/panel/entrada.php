@@ -36,7 +36,7 @@ class entrada extends Controller
 
     public function tb_entradas(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
 
         if ($idUsuario == 1 || $idUsuario == 2) {
             $idSucursal = 1;

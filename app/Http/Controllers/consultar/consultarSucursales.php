@@ -34,7 +34,8 @@ class consultarSucursales extends Controller
     public function consultarSucursalesUsuario(Request $request)
     {
         // $idUsuario = $request['idUsuario'];
-        $idUsuario  = auth()->id();
+        // $idUsuario  = auth()->id();
+        $idUsuario  = $request->header('usuid');
 
         $sucursalesUsuario  = usuariosSucursales::join('sucursales as s', 's.id', 'usuariosSucursales.sucursal_id')
                                                     ->where('usuariosSucursales.user_id', $idUsuario)

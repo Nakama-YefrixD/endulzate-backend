@@ -46,7 +46,7 @@ class tiposController extends Controller
             
             if($tiposProductos->update()) {
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "Editar";
                 $control->tabla = "Tipos";
                 $control->campos = "all";
@@ -75,7 +75,7 @@ class tiposController extends Controller
             $tiposProductos = Tipos::find($request['id']);
             if($tiposProductos->delete()){
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "Eliminar";
                 $control->tabla = "Tipos";
                 $control->campos = "all";

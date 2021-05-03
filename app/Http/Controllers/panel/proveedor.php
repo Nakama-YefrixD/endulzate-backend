@@ -48,7 +48,7 @@ class proveedor extends Controller
 
             if($proveedor->update()) {
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "Editar";
                 $control->tabla = "Proveedores";
                 $control->campos = "nombre, ruc, numero, direccion";

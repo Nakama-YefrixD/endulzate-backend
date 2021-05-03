@@ -56,7 +56,7 @@ class ventasController extends Controller
 
     public function tb_ventas(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
 
     	if ($idUsuario == 1 || $idUsuario == 2) {
     		$idSucursal = 1;
@@ -100,7 +100,7 @@ class ventasController extends Controller
 
     public function tb_ventas_detalladas(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
 
     	if ($idUsuario == 1 || $idUsuario == 2) {
     		$idSucursal = 1;
@@ -147,7 +147,7 @@ class ventasController extends Controller
 
     public function tb_buscarProducto(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
             $idSucursal = 1;
@@ -252,7 +252,7 @@ class ventasController extends Controller
             $venta = new ventas;
             $venta->tipoComprobante_id  = $request['tipoComprobante'];
             $venta->cliente_id          = $idCliente;
-            $venta->user_id             = auth()->id();
+            $venta->user_id             = $request->header('usuid');
             $venta->tipoMoneda_id       = $request['tipoMoneda'];
             $venta->numero              = $request['facturaVenta'];
             $venta->fecha               = $request['dateFactura'];
@@ -329,7 +329,7 @@ class ventasController extends Controller
 
 
                         $control = new control;
-                        $control->user_id       = auth()->id();
+                        $control->user_id       = $request->header('usuid');
                         $control->metodo        = "Actualizar";
                         $control->tabla         = "Productos";
                         $control->campos        = "cantidad";
@@ -492,7 +492,7 @@ class ventasController extends Controller
             $venta = new ventas;
             $venta->tipoComprobante_id  = $request['tipoComprobante'];
             $venta->cliente_id          = $idCliente;
-            $venta->user_id             = auth()->id();
+            $venta->user_id             = $request->header('usuid');
             $venta->tipoMoneda_id       = $request['tipoMoneda'];
             $venta->numero              = 0;
             $venta->fecha               = $request['dateFactura'];
@@ -595,7 +595,7 @@ class ventasController extends Controller
             $venta = new ventas;
             $venta->tipoComprobante_id  = $request['tipoComprobante'];
             $venta->cliente_id          = $idCliente;
-            $venta->user_id             = auth()->id();
+            $venta->user_id             = $request->header('usuid');
             $venta->tipoMoneda_id       = $request['tipoMoneda'];
             $venta->numero              = $request['facturaVenta'];
             $venta->fecha               = $request['dateFactura'];
@@ -670,7 +670,7 @@ class ventasController extends Controller
                             ->setMtoPrecioUnitario($precioFinalProducto);
 
                         $control = new control;
-                        $control->user_id = auth()->id();
+                        $control->user_id = $request->header('usuid');
                         $control->metodo = "actualizar";
                         $control->tabla = "Productos";
                         $control->campos = "cantidad";
@@ -817,7 +817,7 @@ class ventasController extends Controller
             $venta = new ventas;
             $venta->tipoComprobante_id  = $request['tipoComprobante'];
             $venta->cliente_id          = $idCliente;
-            $venta->user_id             = auth()->id();
+            $venta->user_id             = $request->header('usuid');
             $venta->tipoMoneda_id       = $request['tipoMoneda'];
             $venta->numero              = 0;
             $venta->fecha               = $request['dateFactura'];
@@ -868,7 +868,7 @@ class ventasController extends Controller
         $numeroDocumentoCliente     = $request['numeroDocumento'];
         $tipoDocumentoCliente       = tiposDocumentos::where('codigo', $request['tipoDocumento'])->first();
         $nombreCliente              = $request['nombreCliente'];
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
             $idSucursal = 1;
@@ -918,7 +918,7 @@ class ventasController extends Controller
             $venta->tipoComprobante_id  = $request['tipoComprobante'];
             $venta->sucursal_id         = $request['sucursalId'];
             $venta->cliente_id          = $idCliente;
-            $venta->user_id             = auth()->id();
+            $venta->user_id             = $request->header('usuid');
             $venta->tipoMoneda_id       = $request['tipoMoneda'];
             $venta->cajaVenta_id        = $idCajaVenta;
             $venta->numero              = $request['numeroVenta'];
@@ -1097,7 +1097,7 @@ class ventasController extends Controller
             $producto->vendido = $producto->vendido + $ventaDetalle->cantidad;
             if($producto->update()){
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "actualizar";
                 $control->tabla = "Productos";
                 $control->campos = "cantidad";
@@ -1181,7 +1181,7 @@ class ventasController extends Controller
                 $codigo = $request['codigoProductoNuevo'];
             }
 
-            $idUsuario = auth()->id();
+            $idUsuario = $request->header('usuid');
             if($idUsuario == 1 || $idUsuario == 2){
                 // $idSucursal                  = env('sucursalId');
                 $idSucursal = 1;
@@ -1451,7 +1451,7 @@ class ventasController extends Controller
 
                 $notaCredito = new notascreditos;
                 $notaCredito->venta_id      = $idVenta;
-                $notaCredito->usuario_id    = auth()->id();
+                $notaCredito->usuario_id    = $request->header('usuid');
                 $notaCredito->motivo        = $motivo;
                 if($notaCredito->save()){
 
@@ -1603,7 +1603,7 @@ class ventasController extends Controller
             }
             $notaCredito = new notascreditos;
             $notaCredito->venta_id      = $idVenta;
-            $notaCredito->usuario_id    = auth()->id();
+            $notaCredito->usuario_id    = $request->header('usuid');
             $notaCredito->motivo        = $motivo;
             $notaCredito->cajaVenta_id  = $idCajaVenta;
             $notaCredito->estado        = 0;

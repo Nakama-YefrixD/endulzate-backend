@@ -23,7 +23,8 @@ class cajaVentaController extends Controller
     // Api devuelve informacion de la caja venta actual 
     public function cajaVentaActual() 
     {
-        $idUsuario  = auth()->id();
+        // $idUsuario  = $request->header('usuid');
+        $idUsuario  = $request->header('usuid');
 
         $cajaVenta    = cajasVentas::join('sucursales as s', 's.id', 'cajasVentas.sucursal_id')
                                     ->where('user_id', $idUsuario)
@@ -86,7 +87,7 @@ class cajaVentaController extends Controller
     {
         date_default_timezone_set("America/Lima");
         
-        // $idUsuario              = auth()->id();
+        // $idUsuario              = $request->header('usuid');
         $idUsuario   = $request->header('usuid');
         $totalApertura          = $request['totalApertura'];
         $totalAperturo          = $request['totalAperturo'];

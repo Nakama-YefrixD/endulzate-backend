@@ -28,7 +28,8 @@ class transferenciaController extends Controller
     {
 
         // $idUsuario  =   $request['idUsuario']; 
-        $idUsuario  = auth()->id();
+        // $idUsuario  = auth()->id();
+        $idUsuario  = $request->header('usuid');
         $idSucursal = $request['idSucursal'];
         
         $sucursalusuarioPredeterminado = 0;
@@ -194,7 +195,8 @@ class transferenciaController extends Controller
             }
 
             if($userOrigen_id == null){
-                $userOrigen_id = auth()->id();
+                // $userOrigen_id = auth()->id();
+                $userOrigen_id = $request->header('usuid');
             }
 
             
@@ -311,7 +313,8 @@ class transferenciaController extends Controller
     public function eliminar(Request $request)
     {
         // $idUsuario  =   $request['idUsuario']; 
-        $idUsuario          = auth()->id();
+        // $idUsuario          = auth()->id();
+        $idUsuario          = $request->header('usuid');
         $idTransferencia    = $request['idTransferencia'];
 
         DB::beginTransaction();

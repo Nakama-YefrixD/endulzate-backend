@@ -15,7 +15,7 @@ class cajasProductosController extends Controller
 {
     public function consultaCaja(Request $request) 
     {
-    	$idUsuario = auth()->id();
+    	$idUsuario = $request->header('usuid');
 
     	if ($idUsuario == 1 || $idUsuario == 2) {
     		$idSucursal = 1;
@@ -63,7 +63,7 @@ class cajasProductosController extends Controller
 
     public function abrirCaja(Request $request)
     {
-    	$idUsuario = auth()->id();
+    	$idUsuario = $request->header('usuid');
 
         if ($idUsuario == 1 || $idUsuario == 2) {
             $idSucursal = 1;
@@ -136,7 +136,7 @@ class cajasProductosController extends Controller
 
     public function cerrarCaja(Request $request)
     {
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
 
         if ($idUsuario == 1 || $idUsuario == 2) {
             $idSucursal = 1;

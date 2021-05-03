@@ -41,7 +41,7 @@ class tiposcomprobanteController extends Controller
     }
 
     public function ventaReact(){
-        $idUsuario = auth()->id();
+        $idUsuario = $request->header('usuid');
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
             $idSucursal = 1;

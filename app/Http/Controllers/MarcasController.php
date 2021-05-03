@@ -48,7 +48,7 @@ class MarcasController extends Controller
             
             if($marcas->update()) {
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "Editar";
                 $control->tabla = "Marcas";
                 $control->campos = "all";
@@ -77,7 +77,7 @@ class MarcasController extends Controller
             $marcas = marcas::find($request['id']);
             if($marcas->delete()){
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "Eliminar";
                 $control->tabla = "Marcas";
                 $control->campos = "all";

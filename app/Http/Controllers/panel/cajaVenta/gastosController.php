@@ -25,7 +25,8 @@ class gastosController extends Controller
     {
         // $idUsuario   = $request['idUsuario'];
         $idSucursal     = $request['idSucursal'];
-        $idUsuario      = auth()->id();
+        // $idUsuario      = auth()->id();
+        $idUsuario      = $request->header('usuid');
 
         if($idSucursal){
             if($idSucursal == 0){

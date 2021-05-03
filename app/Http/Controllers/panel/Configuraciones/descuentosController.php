@@ -32,7 +32,8 @@ class descuentosController extends Controller
     {   
 
         // $idUsuario  =   $request['idUsuario']; 
-        $idUsuario  = auth()->id();
+        // $idUsuario  = auth()->id();
+        $idUsuario  = $request->header('usuid');
         $idSucursal = $request['idSucursal'];
         
         $sucursalusuarioPredeterminado = 0;
