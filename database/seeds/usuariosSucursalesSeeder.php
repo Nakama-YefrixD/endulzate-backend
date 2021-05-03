@@ -19,6 +19,12 @@ class usuariosSucursalesSeeder extends Seeder
         ]);
 
         usuariosSucursales::create([
+            "sucursal_id"    => 1,
+            "user_id"        => 2,
+            "predeterminado" => 1
+        ]);
+
+        usuariosSucursales::create([
             "sucursal_id"    => 2,
             "user_id"        => 2,
             "predeterminado" => 1
