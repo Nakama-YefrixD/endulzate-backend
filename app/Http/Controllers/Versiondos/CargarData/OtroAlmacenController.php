@@ -99,6 +99,7 @@ class OtroAlmacenController extends Controller
                         $tipoNuevo->nombre = $tipoProducto;
 
                         if($tipoNuevo->save()) {
+                            $idTipo = $tipoNuevo->id;
                             $logs['TIPOS_AGREGADOS'][] = $tipoProducto." EN LINEA: ".$i;
                         }else{
                             $logs['TIPOS_NO_AGREGADAS'][] = $tipoProducto." EN LINEA: ".$i;
