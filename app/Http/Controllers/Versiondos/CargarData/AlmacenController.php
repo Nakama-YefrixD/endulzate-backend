@@ -63,6 +63,9 @@ class AlmacenController extends Controller
                     $stock               = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $caja                = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
 
+                    // if($i == 2){
+                    //     Productos::update([])
+                    // }
 
                     $marca = Marcas::where('nombre', $marcaProducto)->first();
                     $idMarca = 0;
@@ -108,8 +111,8 @@ class AlmacenController extends Controller
                         $producto->marca_id    = $idMarca;
                         $producto->tipo_id     = $idTipo;
                         $producto->nombre      = $descripcionProducto;
-                        $producto->cantidad    = $stock;
-                        $producto->total       = $stock;
+                        $producto->cantidad    = $producto->cantidad + $stock;
+                        $producto->total       = $producto->cantidad + $stock;
                         $producto->vendido     = 0;
                         $producto->precio      = $precioVenta;
                         if($caja == "CAJA"){
