@@ -55,16 +55,14 @@ class descuentosController extends Controller
                                                                 'sucursal_id'
                                                             ]);
         if(!$sucursalusuarioPredeterminado){
-            $sucursalusuarioPredeterminado = 0;
+            $idSucursal = 0;
             $mensaje = "No existe una sucursal predeterminada";
         }else{
-            $sucursalusuarioPredeterminado = $sucursalusuarioPredeterminado->sucursal_id;
+            $idSucursal = $sucursalusuarioPredeterminado->sucursal_id;
         }
 
         $descuentos = descuentosProductos::join('productos as p', 'p.id', '=', 'descuentosProductos.producto_id')
-                                            ->where(function ($query) use( $sucursalesUsuario , $idSucursal, $sucursalusuarioPredeterminado ) {
-                                                $query->where('descuentosProductos.sucursal_id', $sucursalusuarioPredeterminado);
-                                            })
+                                            ->where('descuentosProductos.sucursal_id', $idSucursal)
                                             ->paginate(10, array(
                                                 'p.id                           as idProductos',
                                                 'descuentosProductos.id         as idDescuentos',
