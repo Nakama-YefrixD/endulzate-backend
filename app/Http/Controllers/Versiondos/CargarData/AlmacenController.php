@@ -47,7 +47,7 @@ class AlmacenController extends Controller
             $usu = User::where('remember_token', $usutoken)
                         ->first([
                             'id as usuid',
-                            'username as usuusuario',
+                            'username as usuusuario'
                         ]);
 
             $fichero_subido = base_path().'/public/versiondos/excels/almacen/'.basename($codigoArchivoAleatorio.'-'.$usu->usuid.'-'.$usu->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
