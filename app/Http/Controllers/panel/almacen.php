@@ -42,7 +42,7 @@ class almacen extends Controller
 
     public function tb_almacen(Request $request)
     {
-	$idUsuario = auth()->id();
+	    $idUsuario = auth()->id();
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
             $idSucursal = 1;

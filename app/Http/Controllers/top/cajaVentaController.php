@@ -86,7 +86,8 @@ class cajaVentaController extends Controller
     {
         date_default_timezone_set("America/Lima");
         
-        $idUsuario              = auth()->id();
+        // $idUsuario              = auth()->id();
+        $idUsuario   = $request->header('usuid');
         $totalApertura          = $request['totalApertura'];
         $totalAperturo          = $request['totalAperturo'];
         $observacionesApertura  = $request['observacionesApertura'];
