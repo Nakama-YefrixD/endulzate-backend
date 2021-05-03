@@ -30,7 +30,7 @@ class cajaVentaController extends Controller
     public function tb_cajaVenta(Request $request)
     {
         // $idUsuario          = $request['idUsuario'];
-        // $idUsuario = auth()->id();
+        // $idUsuario = $request->header('usuid');
         $idUsuario = $request->header('usuid');
         $sucursalesUsuario  = usuariosSucursales::where('user_id', $idUsuario)
                                                     ->get(); 

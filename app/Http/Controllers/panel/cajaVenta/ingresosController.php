@@ -24,7 +24,7 @@ class ingresosController extends Controller
     {
         // $idUsuario   = $request['idUsuario'];
         $idSucursal     = $request['idSucursal'];
-        // $idUsuario      = auth()->id();
+        // $idUsuario      = $request->header('usuid');
         $idUsuario      = $request->header('usuid');
 
         if($idSucursal){

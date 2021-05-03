@@ -26,7 +26,7 @@ class movimientosController extends Controller
     {
         //$sucursales = $request->sucursales;
         ////MOMENTANEO////
-        // $id_user = auth()->id();
+        // $id_user = $request->header('usuid');
         $id_user = $request->header('usuid');
         $sucursales_id = usuariosSucursales::where('user_id', $id_user)->get('sucursal_id');
         $sucursales = [];

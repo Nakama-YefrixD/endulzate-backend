@@ -42,7 +42,7 @@ class almacen extends Controller
 
     public function tb_almacen(Request $request)
     {
-	    // $idUsuario = auth()->id();
+	    // $idUsuario = $request->header('usuid');
 	    $idUsuario = $request->header('usuid');
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
@@ -86,7 +86,7 @@ class almacen extends Controller
 
     public function entradaCrear(Request $request)
     {
-        // $idUsuario = auth()->id();
+        // $idUsuario = $request->header('usuid');
         $idUsuario = $request->header('usuid');
         if($idUsuario == 1 || $idUsuario == 2){
             // $idSucursal                  = env('sucursalId');
@@ -268,7 +268,7 @@ class almacen extends Controller
             $productos->tipoCajaProducto_id     = 1;
 
             if($productos->save()) {
-                // $idUsuario = auth()->id();
+                // $idUsuario = $request->header('usuid');
                 $idUsuario = $request->header('usuid');
                 if($idUsuario == 1 || $idUsuario == 2){
                     // $idSucursal                  = env('sucursalId');
@@ -323,7 +323,7 @@ class almacen extends Controller
 
         DB::beginTransaction();
         try{
-            // $idUsuario = auth()->id();
+            // $idUsuario = $request->header('usuid');
             $idUsuario = $request->header('usuid');
             if($idUsuario == 1 || $idUsuario == 2){
                 // $idSucursal                  = env('sucursalId');
@@ -543,7 +543,7 @@ class almacen extends Controller
 
             if($productos->update()) {
                 $control = new control;
-                // $control->user_id       = auth()->id();
+                // $control->user_id       = $request->header('usuid');
                 $control->user_id       = $request->header('usuid');
                 $control->metodo        = "Editar";
                 $control->tabla         = "productos";

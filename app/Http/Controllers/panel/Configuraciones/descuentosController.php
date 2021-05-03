@@ -30,9 +30,10 @@ class descuentosController extends Controller
 
     public function tb_descuentos(Request $request)
     {   
+        $mensaje = "";
 
         // $idUsuario  =   $request['idUsuario']; 
-        // $idUsuario  = auth()->id();
+        // $idUsuario  = $request->header('usuid');
         $idUsuario  = $request->header('usuid');
         $idSucursal = $request['idSucursal'];
         
@@ -46,38 +47,23 @@ class descuentosController extends Controller
                                                             'sucursal_id'
                                                         ]);
             }
+        }
+
+        $sucursalusuarioPredeterminado  = usuariosSucursales::where('user_id', $idUsuario)
+                                                            ->where('predeterminado', 1)
+                                                            ->first([
+                                                                'sucursal_id'
+                                                            ]);
+        if(!$sucursalusuarioPredeterminado){
+            $sucursalusuarioPredeterminado = 0;
+            $mensaje = "No existe una sucursal predeterminada";
         }else{
-            $sucursalusuarioPredeterminado  = usuariosSucursales::where('user_id', $idUsuario)
-                                                                ->where('predeterminado', 1)
-                                                                ->first([
-                                                                    'sucursal_id'
-                                                                ]);
-            if(!$sucursalusuarioPredeterminado){
-                $sucursalusuarioPredeterminado = 0;
-                
-            }else{
-                $sucursalusuarioPredeterminado = $sucursalusuarioPredeterminado->sucursal_id;
-            }
+            $sucursalusuarioPredeterminado = $sucursalusuarioPredeterminado->sucursal_id;
         }
 
         $descuentos = descuentosProductos::join('productos as p', 'p.id', '=', 'descuentosProductos.producto_id')
                                             ->where(function ($query) use( $sucursalesUsuario , $idSucursal, $sucursalusuarioPredeterminado ) {
-                                                if($idSucursal){
-                                                    if($idSucursal == 0){
-                                                        if(sizeof($sucursalesUsuario) > 0 ){
-                                                            foreach($sucursalesUsuario as $sucursalUsuario){
-                                                                $query->where('descuentosProductos.sucursal_id', $sucursalUsuario->sucursal_id);
-                                                            }
-                                                        }else{
-                                                            $query->where('descuentosProductos.sucursal_id', 0);
-                                                        } 
-                                                    }else{
-                                                        $query->where('descuentosProductos.sucursal_id', $idSucursal);
-                                                    }
-
-                                                }else{
-                                                    $query->where('descuentosProductos.sucursal_id', $sucursalusuarioPredeterminado);
-                                                }
+                                                $query->where('descuentosProductos.sucursal_id', $sucursalusuarioPredeterminado);
                                             })
                                             ->paginate(10, array(
                                                 'p.id                           as idProductos',
@@ -93,7 +79,8 @@ class descuentosController extends Controller
 
         $rpta = array(
             'respuesta'     => true,
-            'tb_descuentos' => $descuentos
+            'tb_descuentos' => $descuentos,
+            "mensaje" => $mensaje,
         );
         return json_encode($rpta);
         
@@ -102,18 +89,33 @@ class descuentosController extends Controller
 
     public function descuentoCrear(Request $request)
     {
+        $mensaje = "";
 
         $idProductoEscaneado         = $request['idProducto'];
         $precioProductoEscaneado     = $request['precioProducto'];
         $nuevoPrecioOferta           = $request['nuevoPrecio'];
         $cantidadOferta              = $request['cantidad'];
-        $idUsuario = auth()->id();
-        if($idUsuario == 1 || $idUsuario == 2){
-            // $idSucursal                  = env('sucursalId');
-            $idSucursal = 1;
+        $idUsuario = $request->header('usuid');
+
+        $sucursalusuarioPredeterminado  = usuariosSucursales::where('user_id', $idUsuario)
+                                                        ->where('predeterminado', 1)
+                                                        ->first([
+                                                            'sucursal_id'
+                                                        ]);
+
+        if($sucursalusuarioPredeterminado){
+            $idSucursal = $sucursalusuarioPredeterminado->sucursal_id;
         }else{
-            $idSucursal = 2;
+            $idSucursal = 0;
+            $mensaje = "No se encontro una sucursal predeterminada";
         }
+
+        // if($idUsuario == 1 || $idUsuario == 2){
+        //     // $idSucursal                  = env('sucursalId');
+        //     $idSucursal = 1;
+        // }else{
+        //     $idSucursal = 2;
+        // }
         
         $porcentaje = (100*$nuevoPrecioOferta)/$precioProductoEscaneado;
 
@@ -145,6 +147,7 @@ class descuentosController extends Controller
 
             $rpta = array(
                 'response'          =>  $respuesta,
+                'mensaje' => $mensaje
             );
             echo json_encode($rpta);
         } catch (\Exception $e) {
@@ -165,7 +168,7 @@ class descuentosController extends Controller
 
             if($descuento->update()) {
                 $control = new control;
-                $control->user_id = auth()->id();
+                $control->user_id = $request->header('usuid');
                 $control->metodo = "Editar";
                 $control->tabla = "descuentosProductos";
                 $control->campos = "all";
