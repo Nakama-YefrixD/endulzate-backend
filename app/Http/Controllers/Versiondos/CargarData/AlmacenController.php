@@ -9,6 +9,11 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\User;
+use App\Marcas;
+use App\Tipos;
+use App\Productos;
+use App\sucursales;
+use App\almacenes;
 
 class AlmacenController extends Controller
 {
@@ -28,6 +33,9 @@ class AlmacenController extends Controller
             "MARCAS_SELECCIONADAS" => [],
             "MARCAS_AGREGADAS"     => [],
             "MARCAS_NO_AGREGADAS"  => [],
+            "PRODUCTO_NO_ACTUALIZADO"  => [],
+            "PRODUCTO_NO_CREADO"  => [],
+            "ARCHIVO_NO_CARGADO" => ""
         );
 
         try{
@@ -156,7 +164,8 @@ class AlmacenController extends Controller
                             }
                             
                         }else{
-
+                            $respuesta = false;
+                            $logs['PRODUCTO_NO_ACTUALIZADO'][] = $codigoProducto." EN LINEA: ".$i;
                         }
 
                     }else{
@@ -197,13 +206,15 @@ class AlmacenController extends Controller
                             }
 
                         }else{
-
+                            $respuesta = false;
+                            $logs['PRODUCTO_NO_CREADO'][] = $codigoProducto." EN LINEA: ".$i;
                         }
                     }
                 }
 
             }else{
-
+                $respuesta = false;
+                $logs['ARCHIVO_NO_CARGADO'] = "EL ARCHIVO NO SE PUDO CARGAR AL SISTEMA";
             }
 
         } catch (Exception $e) {
