@@ -9,9 +9,9 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\User;
-use App\Marcas;
+use App\marcas;
 use App\Tipos;
-use App\Productos;
+use App\productos;
 use App\sucursales;
 use App\almacenes;
 
@@ -75,14 +75,14 @@ class AlmacenController extends Controller
                     //     Productos::update([])
                     // }
 
-                    $marca = Marcas::where('nombre', $marcaProducto)->first();
+                    $marca = marcas::where('nombre', $marcaProducto)->first();
                     $idMarca = 0;
 
                     if($marca){
                         $idMarca = $marca->id;
                         $logs['MARCAS_SELECCIONADAS'][] = $marcaProducto." EN LINEA: ".$i;
                     }else{
-                        $marcaNueva = new Marcas;
+                        $marcaNueva = new marcas;
                         $marcaNueva->nombre = $marcaProducto;
 
                         if($marcaNueva->save()) {
@@ -113,7 +113,7 @@ class AlmacenController extends Controller
                     
 
                     
-                    $producto = Productos::where('codigo', $codigoProducto)->fist();
+                    $producto = productos::where('codigo', $codigoProducto)->fist();
 
                     if($producto){
                         $producto->marca_id    = $idMarca;
@@ -169,7 +169,7 @@ class AlmacenController extends Controller
                         }
 
                     }else{
-                        $productoNuevo = new Productos;
+                        $productoNuevo = new productos;
                         $productoNuevo->codigo      = $codigoProducto;
                         $productoNuevo->marca_id    = $idMarca;
                         $productoNuevo->tipo_id     = $idTipo;
