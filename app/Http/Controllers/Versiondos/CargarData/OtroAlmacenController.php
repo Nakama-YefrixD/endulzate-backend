@@ -60,15 +60,17 @@ class OtroAlmacenController extends Controller
 
 
 
-            
-            // $usu = User::where('remember_token', $usutoken)
-            $usu = User::where('id', $usuid)
-                        ->first([
-                            'id as usuid',
-                            'username as usuusuario'
-                        ]);
 
-            $fichero_subido = base_path().'/public/versiondos/excels/almacen/'.basename($codigoArchivoAleatorio.'-'.$usu->usuid.'-'.$usu->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+            // $usu = User::where('remember_token', $usutoken)
+            // $usu = User::where('id', $usuid)
+            //             ->first([
+            //                 'id as usuid',
+            //                 'username as usuusuario'
+            //             ]);
+
+
+
+            $fichero_subido = base_path().'/public/versiondos/excels/almacen/'.basename($codigoArchivoAleatorio.'-1-admin-'.$fechaActual.'-'.$_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
                 $objPHPExcel    = IOFactory::load($fichero_subido);
