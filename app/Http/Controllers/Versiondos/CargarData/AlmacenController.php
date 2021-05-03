@@ -33,7 +33,7 @@ class AlmacenController extends Controller
         try{
             $codigoArchivoAleatorio = mt_rand(0, mt_getrandmax())/mt_getrandmax();
 
-            $usutoken = $request->header('api_token');
+            $usutoken = $request->header('api-token');
             $archivo  = $_FILES['file']['name'];
 
             $usu = User::where('remember_token', $usutoken)
