@@ -21,7 +21,7 @@ class cajaVentaController extends Controller
     }
 
     // Api devuelve informacion de la caja venta actual 
-    public function cajaVentaActual() 
+    public function cajaVentaActual(Request $request) 
     {
         // $idUsuario  = $request->header('usuid');
         $idUsuario  = $request->header('usuid');

@@ -115,7 +115,7 @@ Route::post('/almacen/transferencias/eliminar', 'panel\transferencia\transferenc
     Route::get('/ventas/tb_buscarProducto', 'panel\ventasController@tb_buscarProducto')->name('ventas.tb_buscarProducto');
     Route::get('/ventas/factura/serie', 'tiposcomprobanteController@facturaReact');
     Route::get('/ventas/boleta/serie', 'tiposcomprobanteController@boletaReact');
-    Route::get('/ventas/venta/serie', 'tiposcomprobanteController@ventaReact');
+    Route::post('/ventas/venta/serie', 'tiposcomprobanteController@ventaReact'); // OJO ANTES ERA GET AHORA POST
 
     Route::post('/ventas/cancelar/venta/interna', 'panel\ventasController@cancelarVentaInterna')
                 ->name('ventas.cancelar.venta.interna');
