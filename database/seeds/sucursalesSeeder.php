@@ -16,7 +16,14 @@ class sucursalesSeeder extends Seeder
         	'id' => 1,
         	'codigo' => '001',
         	'direccion' => 'PRUEBA',
-        	'nombre' => 'Endulzate',
+        	'nombre' => 'Endulzate1',
+        ]);
+
+        sucursales::create([
+        	'id' => 2,
+        	'codigo' => '002',
+        	'direccion' => 'Plaza de las americas',
+        	'nombre' => 'Endulzate2',
         ]);
     }
 }

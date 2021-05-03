@@ -25,5 +25,12 @@ class tiposMonedasSeeder extends Seeder
             'abreviatura' => 'USD',
             'nombre' => 'DÓLARES AMERICANOS',
         ]);
+
+        tiposMonedas::create([
+            'codigo' => '71',
+            'simbolo' => 'NA',
+            'abreviatura' => 'NA',
+            'nombre' => 'NA',
+        ]);
     }
 }
