@@ -108,8 +108,11 @@ class OtroAlmacenController extends Controller
 
                     
 
-                    
-                    $producto = productos::where('codigo', $codigoProducto)->first();
+                    if($codigoProducto == 0){
+                        $producto = false;
+                    }else{
+                        $producto = productos::where('codigo', $codigoProducto)->first();
+                    } 
 
                     if($producto){
                         $producto->marca_id    = $idMarca;
