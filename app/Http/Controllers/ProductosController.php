@@ -131,8 +131,12 @@ class ProductosController extends Controller
 
             if($descuentosProducto){
 
+                $variosDescuentos = descuentosProductos::where('producto_id', $producto->id)
+                                                      ->get();
+
             }else{
                 $descuentosProducto = 0;
+                $variosDescuentos = 0;
             }
 
             $estado = true;
@@ -141,12 +145,14 @@ class ProductosController extends Controller
         }else{
             $estado = false;
             $descuentosProducto = 0;
+            $variosDescuentos = 0;
         }
 
         $rpta = array(
-            'response'      => $estado,
-            'producto'      => $producto,
-            'descuento'     => $descuentosProducto
+            'response'         => $estado,
+            'producto'         => $producto,
+            'descuento'        => $descuentosProducto,
+            'variosDescuentos' => $variosDescuentos,
         );
 
         echo json_encode($rpta);
