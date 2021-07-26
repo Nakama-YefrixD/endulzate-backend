@@ -36,6 +36,7 @@ class consultarSucursales extends Controller
         // $idUsuario = $request['idUsuario'];
         // $idUsuario  = auth()->id();
         $idUsuario  = $request->header('usuid');
+        $idUsuario = intval($idUsuario);
 
         $sucursalesUsuario  = usuariosSucursales::join('sucursales as s', 's.id', 'usuariosSucursales.sucursal_id')
                                                     ->where('usuariosSucursales.user_id', $idUsuario)
