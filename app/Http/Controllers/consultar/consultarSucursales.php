@@ -39,7 +39,7 @@ class consultarSucursales extends Controller
         $idUsuario = intval($idUsuario);
 
         $sucursalesUsuario  = usuariosSucursales::join('sucursales as s', 's.id', 'usuariosSucursales.sucursal_id')
-                                                    // ->where('usuariosSucursales.user_id', $idUsuario)
+                                                    ->where('usuariosSucursales.user_id', $idUsuario)
                                                     ->get([
                                                         's.id',
                                                         's.nombre'
