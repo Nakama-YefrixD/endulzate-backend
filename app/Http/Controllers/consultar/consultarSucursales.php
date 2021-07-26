@@ -51,7 +51,8 @@ class consultarSucursales extends Controller
         
         $rpta = array(
             'respuesta'   => $respuesta,
-            'sucursales'  => $sucursalesUsuario
+            'sucursales'  => $sucursalesUsuario,
+            'idUsuario'   => $idUsuario
         );
 
         return json_encode($rpta);
