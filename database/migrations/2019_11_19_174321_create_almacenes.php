@@ -20,6 +20,8 @@ class CreateAlmacenes extends Migration
             $table->string('stock');
             $table->string('vendido');
             $table->string('total');
+            $table->string('transferenciarecibida')->default(0);
+            $table->string('transferenciarealizada')->default(0);
             $table->timestamps();
 
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
