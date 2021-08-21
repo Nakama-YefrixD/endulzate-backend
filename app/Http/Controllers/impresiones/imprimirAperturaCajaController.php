@@ -18,10 +18,10 @@ class imprimirAperturaCajaController extends Controller
     public function aperturarCaja($idCajaVenta)
     {
         date_default_timezone_set("America/Lima");
-        $rucEmpresa         = "2000001";
-        $nombreEmpresa      = "ENDULZATE"; 
-        $direccionEmpresa   = '-';
-        $telefonoEmpresa    = '-';
+        // $rucEmpresa         = "2000001";
+        // $nombreEmpresa      = "ENDULZATE"; 
+        // $direccionEmpresa   = '-';
+        // $telefonoEmpresa    = '-';
         
         $cajaVenta = cajasVentas::join('sucursales as s', 's.id', 'cajasVentas.sucursal_id')
                                 ->join('users as u', 'u.id', 'cajasVentas.user_id')
@@ -33,8 +33,21 @@ class imprimirAperturaCajaController extends Controller
                                     'u.name                     as nombreUsuario',
                                     'cajasVentas.totalApertura  as totalAperturaCajaVenta',
                                     'cajasVentas.totalAperturo  as totalAperturoCajaVenta',
-                                    'cajasVentas.observacionesApertura  as observacionesApertura'
+                                    'cajasVentas.observacionesApertura  as observacionesApertura',
+                                    's.id as sucursal_id'
                                 ]);
+
+        if($cajaVenta->sucursal_id == 2){
+            $rucEmpresa         = "10416379179";
+            $nombreEmpresa      = "ENDULZATE 2"; 
+            $direccionEmpresa   = 'Calle Alfonso Ugarte 313 a, Urb La Libertad C.C.';
+            $telefonoEmpresa    = '054-259909';
+        }else{
+            $rucEmpresa         = "10416379179";
+            $nombreEmpresa      = "ENDULZATE 1"; 
+            $direccionEmpresa   = 'Calle Marañon 324 Zamacola';
+            $telefonoEmpresa    = '054-316354';
+        }
                                 
 
         $codigoQr = QrCode::format('png')

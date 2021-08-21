@@ -19,10 +19,6 @@ class imprimirVentaController extends Controller
     public function imprimirVenta($idVenta)
     {
         date_default_timezone_set("America/Lima");
-        $rucEmpresa         = "2000001";
-        $nombreEmpresa      = "ENDULZATE"; 
-        $direccionEmpresa   = '-';
-        $telefonoEmpresa    = '-';
 
         $ventas = ventas::join('clientes as c', 'ventas.cliente_id', '=', 'c.id')
                         ->join('tiposDocumentos as td', 'c.tipoDocumento_id', '=', 'td.id')
@@ -46,8 +42,22 @@ class imprimirVentaController extends Controller
                             'ventas.impuestos   as impuestosVentas',
                             'ventas.total       as totalVentas',
                             'ventas.id          as idVentas',
-                            'ventas.created_at  as created_atVenta'
+                            'ventas.created_at  as created_atVenta',
+                            'ventas.sucursal_id as sucursal_id'
                         ]);
+
+        if($ventas->sucursal_id == 2){
+            $rucEmpresa         = "10416379179";
+            $nombreEmpresa      = "ENDULZATE 2"; 
+            $direccionEmpresa   = 'Calle Alfonso Ugarte 313 a, Urb La Libertad C.C.';
+            $telefonoEmpresa    = '054-259909';
+        }else{
+            $rucEmpresa         = "10416379179";
+            $nombreEmpresa      = "ENDULZATE 1"; 
+            $direccionEmpresa   = 'Calle Marañon 324 Zamacola';
+            $telefonoEmpresa    = '054-316354';
+        }
+
 
         if($ventas->documentoClientes == 0){
             $documentoCliente = "00000000";
