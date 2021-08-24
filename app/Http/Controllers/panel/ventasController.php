@@ -876,28 +876,29 @@ class ventasController extends Controller
             $idSucursal = 2;
         }
 
-        $cajaVenta    = cajasVentas::where('sucursal_id', $idSucursal)
-                                        ->where('cierre', null)
-                                        ->first();
-
-        // QUITAR CUANDO FUNCIONE LA CAJA DE VENTA
-        if($cajaVenta){
-            $tipoMoneda = tiposmonedas::where('id', $request['tipoMoneda'])
-                                            ->where('codigo', 71)
-                                            ->first();
-
-            $idCajaVenta = $cajaVenta->id;
-            if(!$tipoMoneda){
-                $cajaVenta              = cajasVentas::find($idCajaVenta);
-                $cajaVenta->totalCierre = $cajaVenta->totalCierre + $request['totalVenta'];
-                $cajaVenta->update();
-            }
-        }else{
-            $idCajaVenta = null;
-        }
 
         DB::beginTransaction();
         try {
+
+            $cajaVenta    = cajasVentas::where('sucursal_id', $idSucursal)
+                                        ->where('cierre', null)
+                                        ->first();
+
+            // QUITAR CUANDO FUNCIONE LA CAJA DE VENTA
+            if($cajaVenta){
+                $tipoMoneda = tiposmonedas::where('id', $request['tipoMoneda'])
+                                                ->where('codigo', 71)
+                                                ->first();
+
+                $idCajaVenta = $cajaVenta->id;
+                if(!$tipoMoneda){
+                    $cajaVenta              = cajasVentas::find($idCajaVenta);
+                    $cajaVenta->totalCierre = $cajaVenta->totalCierre + $request['totalVenta'];
+                    $cajaVenta->update();
+                }
+            }else{
+                $idCajaVenta = null;
+            }
 
             $cliente = clientes::where('documento', $numeroDocumentoCliente)
                                 ->first();
