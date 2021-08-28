@@ -77,7 +77,7 @@ class gastosController extends Controller
                             
                             
                         })
-                        ->orderby('gastos.id')
+                        ->orderby('gastos.id', 'desc')
                         ->paginate(10, array(
                             'gastos.id          as idGasto',
                             's.nombre           as nombreSucursal',
