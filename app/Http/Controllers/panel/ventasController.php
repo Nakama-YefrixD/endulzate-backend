@@ -94,7 +94,9 @@ class ventasController extends Controller
                             'ventas.numero              as numeroVentas',
                             'ventas.estadoSunat         as estadoSunatVentas',
                             'ventas.subtotal            as subTotalVentas',
-                            'ventas.total               as totalVentas'
+                            'ventas.total               as totalVentas',
+                            'ventas.tipoMoneda_id '
+                            
                         )->paginate(10);
     }
 
