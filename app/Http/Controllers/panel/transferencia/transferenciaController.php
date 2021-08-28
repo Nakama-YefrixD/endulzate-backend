@@ -84,6 +84,7 @@ class transferenciaController extends Controller
                                                 $query->orwhere('transferencias.destino', $sucursalusuarioPredeterminado);
                                             }
                                         })
+                                        ->orderby('transferencias.id', 'asc')
                                         ->paginate(10, array(
                                             'transferencias.id as idTransferencia',
                                             's.nombre  as origenTransferencia',
