@@ -76,6 +76,7 @@ class ingresosController extends Controller
                                             
                                             
                                         })
+                                        ->orderby('ingresosCajasVentas.id', 'desc')
                                         ->paginate(10, array(
                                             'ingresosCajasVentas.id         as idIngreso',
                                             's.nombre                       as nombreSucursal',
