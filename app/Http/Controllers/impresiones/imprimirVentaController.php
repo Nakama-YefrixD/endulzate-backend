@@ -19,6 +19,7 @@ class imprimirVentaController extends Controller
     public function imprimirVenta($idVenta)
     {
         date_default_timezone_set("America/Lima");
+        $tipoventa = "EFECTIVO";
 
         $ventas = ventas::join('clientes as c', 'ventas.cliente_id', '=', 'c.id')
                         ->join('tiposDocumentos as td', 'c.tipoDocumento_id', '=', 'td.id')
@@ -43,7 +44,8 @@ class imprimirVentaController extends Controller
                             'ventas.total       as totalVentas',
                             'ventas.id          as idVentas',
                             'ventas.created_at  as created_atVenta',
-                            'ventas.sucursal_id as sucursal_id'
+                            'ventas.sucursal_id as sucursal_id',
+                            'ventas.tiposMonedas'
                         ]);
 
         if($ventas->sucursal_id == 2){
@@ -63,6 +65,10 @@ class imprimirVentaController extends Controller
             $documentoCliente = "00000000";
         }else{
             $documentoCliente = $ventas->documentoClientes;
+        }
+
+        if($ventas->tiposMonedas == 3){
+            $tipoventa = "TARJETA";
         }
 
         $codigoQr = QrCode::format('png')
@@ -103,6 +109,7 @@ class imprimirVentaController extends Controller
         $printer->setJustification(Printer::JUSTIFY_CENTER);
         $printer->text($ventas->nombreTiposcomprobante."\n");
         $printer->text("SERIE: ".$ventas->serieTiposcomprobante."-".$ventas->numeroVentas."\n");
+        $printer->text($tipoventa."\n");
         #La fecha tambi�n
 
         $printer->text($ventas->created_atVenta . "\n");
