@@ -45,7 +45,7 @@ class imprimirVentaController extends Controller
                             'ventas.id          as idVentas',
                             'ventas.created_at  as created_atVenta',
                             'ventas.sucursal_id as sucursal_id',
-                            'ventas.tiposMonedas'
+                            'ventas.tipoMoneda_id'
                         ]);
 
         if($ventas->sucursal_id == 2){
@@ -67,7 +67,7 @@ class imprimirVentaController extends Controller
             $documentoCliente = $ventas->documentoClientes;
         }
 
-        if($ventas->tiposMonedas == 3){
+        if($ventas->tipoMoneda_id == 3){
             $tipoventa = "TARJETA";
         }
 
