@@ -109,7 +109,7 @@ class imprimirVentaController extends Controller
         $printer->setJustification(Printer::JUSTIFY_CENTER);
         $printer->text($ventas->nombreTiposcomprobante."\n");
         $printer->text("SERIE: ".$ventas->serieTiposcomprobante."-".$ventas->numeroVentas."\n");
-        $printer->text($tipoventa."\n");
+        $printer->text("TIPO: ".$tipoventa."\n");
         #La fecha tambi�n
 
         $printer->text($ventas->created_atVenta . "\n");
