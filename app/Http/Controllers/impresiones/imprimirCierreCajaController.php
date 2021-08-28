@@ -44,6 +44,8 @@ class imprimirCierreCajaController extends Controller
                                     'cajasVentas.numeroIngresos as numeroIngresosCaja',
                                     'cajasVentas.numeroVentasEfectivo as numeroVentasEfectivoCaja',
                                     'cajasVentas.totalVentasEfectivo  as totalVentasEfectivoCaja',
+                                    'cajasVentas.totalVentasTarjeta as totalVentasTarjeta',
+                                    'cajasVentas.numeroVentasTarjeta as numeroVentasTarjeta',
 
                                     'cajasVentas.observacionesCierre    as observacionesCierre',
                                     's.id as sucursal_id'
@@ -78,6 +80,10 @@ class imprimirCierreCajaController extends Controller
         
         $ventas = ventas::where('cajaVenta_id', $idCajaVenta)
                           ->where('tipoMoneda_id', '!=',$tiposmonedas->id)
+                          ->get();
+
+        $ventasTarjetas = ventas::where('cajaVenta_id', $idCajaVenta)
+                          ->where('tipoMoneda_id', $tiposmonedas->id)
                           ->get();
 
         $codigoQr = QrCode::format('png')
@@ -207,7 +213,7 @@ class imprimirCierreCajaController extends Controller
         $printer->text("\n");
         $printer->text("-----------------------------"."\n");
         $printer->text("\n");
-        $printer->text("VENTAS REALIZADAS: \n");
+        $printer->text("VENTAS REALIZADAS EN EFECTIVO: \n");
         $printer->text("\n");
 
         if(sizeof($ventas) > 0){
@@ -221,7 +227,7 @@ class imprimirCierreCajaController extends Controller
                 $cont = $cont + 1;
             }
         }else{
-            $printer->text("NO SE REALIZO NINGUNA VENTA: \n");
+            $printer->text("NO SE REALIZO NINGUNA VENTA EN EFECTIVO: \n");
         }
 
         $printer->text("\n");
@@ -229,6 +235,40 @@ class imprimirCierreCajaController extends Controller
         $printer->text("NUMERO: ".$cajaVenta->numeroVentasEfectivoCaja."\n");
         $printer->text("TOTAL: ".$cajaVenta->totalVentasEfectivoCaja."\n");
         $printer->text("\n");
+
+
+
+        // VENTAS TARJETAS
+
+
+        $printer->setJustification(Printer::JUSTIFY_LEFT);
+        $printer->text("\n");
+        $printer->text("-----------------------------"."\n");
+        $printer->text("\n");
+        $printer->text("VENTAS REALIZADAS TARJETA: \n");
+        $printer->text("\n");
+
+        if(sizeof($ventasTarjetas) > 0){
+            
+            foreach($ventasTarjetas as $venta){
+                
+                $printer->text("VENTA NUMERO: ".$venta->numero."\n");
+                $printer->text("OBSERVACION: ".$venta->Observaciones."\n");
+                $printer->text("TOTAL: ".$venta->total."\n");
+
+                $cont = $cont + 1;
+            }
+        }else{
+            $printer->text("NO SE REALIZO NINGUNA VENTA CON TARJETA: \n");
+        }
+
+        $printer->text("\n");
+        $printer->setJustification(Printer::JUSTIFY_RIGHT);
+        $printer->text("NUMERO: ".$cajaVenta->numeroVentasTarjeta."\n");
+        $printer->text("TOTAL: ".$cajaVenta->totalVentasTarjeta."\n");
+        $printer->text("\n");
+
+
         
 
         $printer->setJustification(Printer::JUSTIFY_CENTER);
