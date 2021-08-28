@@ -1243,6 +1243,7 @@ class ventasController extends Controller
         $cliente = clientes::find($venta->cliente_id);
 
         $detallesVenta = detallesVentas::join('productos as p', 'p.id', '=', 'detallesVentas.producto_id')
+                                    ->join('ventas as v', 'v.id', 'detallesVentas.venta_id')
                                     ->where('venta_id', $idVenta)
                                     ->get([
                                         'p.nombre                   as nombreProducto',
@@ -1251,7 +1252,8 @@ class ventasController extends Controller
                                         'detallesVentas.igv         as igvProducto',
                                         'detallesVentas.descuento   as descuentoProducto',
                                         'detallesVentas.subtotal    as subtotalProducto',
-                                        'detallesVentas.total       as totalProducto'
+                                        'detallesVentas.total       as totalProducto',
+                                        'v.Observaciones'
                                     ]);
                                     
         $data = array(
