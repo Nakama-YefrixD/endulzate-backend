@@ -75,7 +75,7 @@
       </table>
       <div id="notices">
         <div>Observacion:</div>
-        <div class="notice">{{ $venta->observaciones }}</div>
+        <div class="notice">{{ $venta->Observaciones }}</div>
       </div>
     </main>
     <footer>
