@@ -29,6 +29,8 @@ Route::post('/agregar/nuevoProducto','api\agregarProductoController@nuevoProduct
 
 // IMPRESIONES
 
+Route::get('/imprimir/almacen/{idusuario}','impresiones\imprimirAlmacenController@imprimirAlmacen');
+Route::get('/imprimir/transferencia/{idTransferencia}','impresiones\imprimirTransferenciaController@imprimirTransferencia');
 Route::get('/imprimir/venta/{idVenta}','impresiones\imprimirVentaController@imprimirVenta');
 Route::get('/imprimir/aperturarCaja/{idCajaVenta}','impresiones\imprimirAperturaCajaController@aperturarCaja');
 Route::get('/imprimir/cierreCaja/{idCajaVenta}','impresiones\imprimirCierreCajaController@cierreCaja');
