@@ -47,12 +47,12 @@ class imprimirTransferenciaController extends Controller
 
         $printer->setJustification(Printer::JUSTIFY_CENTER);
 
-        $printer->text("\n"." IMPRESIÓN DE ALMACEN: "."\n");
+        $printer->text("\n"." IMPRESIÓN DE TRANSFERENCIA: "."\n");
         $printer->text("\n".$hoy."\n");
         $printer->setJustification(Printer::JUSTIFY_CENTER);
         $printer->text("-----------------------------" . "\n");
         $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("ALMACEN NUMERO: ");
+        $printer->text("TRANSFERENCIA NUMERO: ");
         $printer->text($tran->id."\n");
         $printer->text("-----------------------------" . "\n");
         $printer->setJustification(Printer::JUSTIFY_LEFT);
@@ -83,25 +83,25 @@ class imprimirTransferenciaController extends Controller
 
         $printer->text("-----------------------------" . "\n");
         $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("OTROS DATOS:\n");
-        $printer->text("-----------------------------" . "\n");
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("TIENDA DE ORIGEN CANTIDAD ANTERIOR: ");
-        $printer->text($tran->antesOrigenCantidad."\n");
-        $printer->text("-----------------------------" . "\n");
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("TIENDA DE DESTINO CANTIDAD ANTERIOR: ");
-        $printer->text($tran->antesDestinoCantidad."\n");
+        // $printer->text("OTROS DATOS:\n");
+        // $printer->text("-----------------------------" . "\n");
+        // $printer->setJustification(Printer::JUSTIFY_LEFT);
+        // $printer->text("TIENDA DE ORIGEN CANTIDAD ANTERIOR: ");
+        // $printer->text($tran->antesOrigenCantidad."\n");
+        // $printer->text("-----------------------------" . "\n");
+        // $printer->setJustification(Printer::JUSTIFY_LEFT);
+        // $printer->text("TIENDA DE DESTINO CANTIDAD ANTERIOR: ");
+        // $printer->text($tran->antesDestinoCantidad."\n");
 
-        $printer->text("-----------------------------" . "\n");
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("TIENDA DE ORIGEN NUEVA CANTIDAD: ");
-        $printer->text($tran->despuesOrigenCantidad."\n");
+        // $printer->text("-----------------------------" . "\n");
+        // $printer->setJustification(Printer::JUSTIFY_LEFT);
+        // $printer->text("TIENDA DE ORIGEN NUEVA CANTIDAD: ");
+        // $printer->text($tran->despuesOrigenCantidad."\n");
 
-        $printer->text("-----------------------------" . "\n");
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("TIENDA DE DESTINO NUEVA CANTIDAD: ");
-        $printer->text($tran->despuesDestinoCantidad."\n");
+        // $printer->text("-----------------------------" . "\n");
+        // $printer->setJustification(Printer::JUSTIFY_LEFT);
+        // $printer->text("TIENDA DE DESTINO NUEVA CANTIDAD: ");
+        // $printer->text($tran->despuesDestinoCantidad."\n");
 
         $printer->feed(3);
         $printer->cut();

@@ -14,7 +14,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 class imprimirAlmacenController extends Controller
 {
-    public function imprimirAlmacen($idusuario)
+    public function imprimirAlmacen($idUsuario)
     {
         // $idUsuario = $request->header('usuid');
 
