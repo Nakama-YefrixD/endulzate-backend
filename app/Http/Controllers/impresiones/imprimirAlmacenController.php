@@ -41,7 +41,7 @@ class imprimirAlmacenController extends Controller
 
         $alms = almacenes::join('productos as p', 'p.id', 'almacenes.producto_id')
                             ->where('sucursal_id', $sucursal)
-                            ->where('a.total', '!=', 0)
+                            ->where('almacenes.total', '!=', 0)
                             ->get([
                                 'almacenes.id',
                                 'p.codigo',
