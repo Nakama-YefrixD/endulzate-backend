@@ -341,6 +341,7 @@ class transferenciaController extends Controller
 
                 if($almacenOrigen){
                     $almacenOrigen->stock = $almacenOrigen->stock + $transferencia->cantidad;
+                    $almacenOrigen->transferenciarealizada = $almacenOrigen->transferenciarealizada + $transferencia->cantidad;
                     if($almacenOrigen->update()){
 
                         $almacenDestino = almacenes::where('producto_id',  $transferencia->producto_id)
@@ -354,6 +355,7 @@ class transferenciaController extends Controller
                         if($almacenDestino){
                             $almacenDestino->stock = $almacenDestino->stock - $transferencia->cantidad;
                             $almacenDestino->total = $almacenDestino->total - $transferencia->cantidad;
+                            $almacenDestino->transferenciarecibida = $almacenDestino->transferenciarecibida - $transferencia->cantidad;
                             if($almacenDestino->update()){
                                 
                                 if($transferencia->delete()){
