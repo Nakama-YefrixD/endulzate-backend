@@ -157,7 +157,7 @@ class imprimirVentaController extends Controller
         $printer->pulse();
         $printer->close();
 
-
+        return view('cerrar');
 
     }
 

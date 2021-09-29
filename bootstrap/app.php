@@ -26,10 +26,6 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 
-$app->middleware([
-    "abilitarcor" => App\Http\Middleware\CorsMiddleware::class // Add this
-]);
-
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     App\Http\Kernel::class
