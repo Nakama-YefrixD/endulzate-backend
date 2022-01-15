@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\productos;
+use App\detallesVentas;
+use App\almacenes;
+use App\ventas;
 
 class cuadrarStockController extends Controller
 {
