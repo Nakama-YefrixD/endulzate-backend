@@ -917,73 +917,7 @@ class ventasController extends Controller
                 $idCliente = $cliente->id;
             }
 
-            $venta = new ventas;
-            $venta->tipoComprobante_id  = $request['tipoComprobante'];
-            $venta->sucursal_id         = $request['sucursalId'];
-            $venta->cliente_id          = $idCliente;
-            $venta->user_id             = $request->header('usuid');
-            $venta->tipoMoneda_id       = $request['tipoMoneda'];
-            $venta->cajaVenta_id        = $idCajaVenta;
-            $venta->numero              = $request['numeroVenta'];
-            $venta->fecha               = date('Y-m-d');
-            $venta->fechaVencimiento    = date('Y-m-d');
-            $venta->descuento           = $request['descuentoVenta'];
-            $venta->igv                 = 18;
-            $venta->impuestos           = $request['igvVenta'];
-            $venta->subtotal            = $request['subTotalVenta'];
-            $venta->total               = $request['totalVenta'];
-            $venta->estadoEmail         = false;
-            $venta->estadoSunat         = false;
-            $venta->observaciones       = $request['observacionVenta'];
-            $venta->created_at          = date('Y-m-d H:i:s');
-
-            $detallesVenta              = $request['detallesVenta'];
-
-            if($venta->save()) {
-                $tiposcomprobante               = tiposComprobantes::find($request['tipoComprobante']);
-                $tiposcomprobante->correlativo  = $tiposcomprobante->correlativo+1;
-                $tiposcomprobante->update();
-
-                for ($x = 0; $x < count($detallesVenta); $x++) {
-                    if($detallesVenta[$x]['idProducto'] != 0){
-                        $ventaDetalles              = new detallesVentas;
-                        $ventaDetalles->venta_id    = $venta->id;
-                        $ventaDetalles->producto_id = $detallesVenta[$x]['idProducto'];
-                        $ventaDetalles->cantidad    = $detallesVenta[$x]['cantidadProducto'];
-                        $ventaDetalles->igv         = $detallesVenta[$x]['totalProducto'] - $detallesVenta[$x]['subTotalProducto'];
-                        $ventaDetalles->descuento   = $detallesVenta[$x]['totalDescuento'];
-                        $ventaDetalles->subtotal    = $detallesVenta[$x]['subTotalProducto'];
-                        $ventaDetalles->total       = $detallesVenta[$x]['totalProducto'];
-                        if($ventaDetalles->save()){
-                            $producto           = Productos::find($detallesVenta[$x]['idProducto']);
-                            $producto->cantidad = $producto->cantidad - $detallesVenta[$x]['cantidadProducto'];
-                            $producto->vendido  = $producto->vendido + $detallesVenta[$x]['cantidadProducto'];
-
-                            if($producto->update()){
-                                
-                                $almacen               = almacenes::where('producto_id', $producto->id)
-                                                                    ->where('sucursal_id', $idSucursal)
-                                                                    ->first();
-                                if($almacen){
-                                    $almacen->stock        = $almacen->stock   - $detallesVenta[$x]['cantidadProducto'];
-                                    $almacen->vendido      = $almacen->vendido + $detallesVenta[$x]['cantidadProducto'];
-                                    $almacen->update();
-
-                                }else{
-                                    $almacen = new almacenes;
-                                    $almacen->sucursal_id   = $idSucursal;
-                                    $almacen->producto_id   = $producto->id;
-                                    $almacen->stock         = 0-$detallesVenta[$x]['cantidadProducto'];
-                                    $almacen->vendido       = $detallesVenta[$x]['cantidadProducto'];
-                                    $almacen->total         = 0;
-                                    $almacen->save();
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            }
+            
 
             DB::commit();
 
