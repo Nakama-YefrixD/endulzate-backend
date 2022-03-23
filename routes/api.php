@@ -46,3 +46,8 @@ Route::post('/versiondos/login', 'Versiondos\Login\LoginController@login');
 // Route::post('/versiondos/cargar-data/almacen', 'Versiondos\CargarData\AlmacenController@CargarDataAlmacen');
 Route::post('/versiondos/cargar-data/almacen', 'Versiondos\CargarData\AlmacenController@CargarDataAlmacenv2');
 Route::post('/versiondos/cargar-data/almacenv2', 'Versiondos\CargarData\OtroAlmacenController@cargar');
+
+Route::post('/versiondos/cargar-data/almacenv2', 'Versiondos\CargarData\OtroAlmacenController@cargar');
+
+
+Route::post('/mostrar-registrar-almacen', 'Versiondos\RegistrarAlmacen\MostrarAlmacenController@MostrarAlmacen');
