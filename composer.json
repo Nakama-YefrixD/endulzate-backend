@@ -18,9 +18,11 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8",
-        "phpoffice/phpspreadsheet": "^1.17",
+        "maatwebsite/excel": "^3.1",
         "mike42/escpos-php": "^2.1",
+        "phpoffice/phpspreadsheet": "^1.16",
         "simplesoftwareio/simple-qrcode": "^2.0",
+        "spatie/laravel-cors": "^1.7",
         "villca/numeros-en-letras": "^1.2",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
