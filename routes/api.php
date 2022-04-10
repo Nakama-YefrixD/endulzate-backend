@@ -51,3 +51,6 @@ Route::post('/versiondos/cargar-data/almacenv2', 'Versiondos\CargarData\OtroAlma
 
 
 Route::post('/mostrar-registrar-almacen', 'Versiondos\RegistrarAlmacen\MostrarAlmacenController@MostrarAlmacen');
+
+
+Route::post('ventas', 'ventas\VentasController@store');
