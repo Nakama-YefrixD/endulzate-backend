@@ -12,8 +12,8 @@ class MostrarVentasController extends Controller
     {
         
         $idUsuario = $request->header('usuid');
-        $re_fechainicio = $request->get('re_fechainicio');
-        $re_fechafinal  = $request->get('re_fechafinal');
+        $re_fechainicio = $request['re_fechainicio'];
+        $re_fechafinal  = $request['re_fechafinal'];
 
     	if ($idUsuario == 1 || $idUsuario == 2) {
     		$idSucursal = 1;
