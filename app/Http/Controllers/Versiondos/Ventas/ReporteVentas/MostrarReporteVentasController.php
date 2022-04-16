@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\ventas;
 use App\gastos;
 use App\ingresosCajasVentas;
+use App\detallesVentas;
 
 class MostrarReporteVentasController extends Controller
 {
@@ -86,6 +87,16 @@ class MostrarReporteVentasController extends Controller
             $rpta_totalIngresos = doubleval($rpta_totalIngresos) + doubleval($ingreso->ingreso);
         }
 
+        $rpta_numeroItemsVendidos = detallesVentas::join('ventas as v', 'v.id', 'detallesVentas.venta_id')
+                                                ->whereBetween('v.created_at', [$re_fechainicio, $re_fechafinal])
+                                                ->where('estadoSunat', 0)
+                                                ->sum('cantidad');
+
+        $rpta_numeroItemsCancelados = detallesVentas::join('ventas as v', 'v.id', 'detallesVentas.venta_id')
+                                                    ->whereBetween('v.created_at', [$re_fechainicio, $re_fechafinal])
+                                                    ->where('estadoSunat', 2)
+                                                    ->sum('cantidad');
+
             
         $rpta = array(
             'response'  => true,
@@ -100,7 +111,9 @@ class MostrarReporteVentasController extends Controller
             'rpta_numeroGastos'    => $rpta_numeroGastos,
             'rpta_totalGastos'     => $rpta_totalGastos,
             'rpta_numeroIngresos'  => $rpta_numeroIngresos,
-            'rpta_totalIngresos'   => $rpta_totalIngresos
+            'rpta_totalIngresos'   => $rpta_totalIngresos,
+            'rpta_numeroItemsVendidos'   => $rpta_numeroItemsVendidos,
+            'rpta_numeroItemsCancelados' => $rpta_numeroItemsCancelados,
         );
 
         return json_encode($rpta);
