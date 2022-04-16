@@ -54,3 +54,5 @@ Route::post('/mostrar-registrar-almacen', 'Versiondos\RegistrarAlmacen\MostrarAl
 
 // REPORTE DE VENTAS
 Route::post('/mostrar-reporte-ventas', 'Versiondos\Ventas\ReporteVentas\MostrarReporteVentasController@MostrarReporteVentas');
+// DETALLE DE REPORTE DE VENTAS
+Route::get('/mostrar-reporte-ventas', 'Versiondos\Ventas\ReporteVentas\MostrarDetalleReportes\MostrarVentasController@MostrarDetallesVentas');
