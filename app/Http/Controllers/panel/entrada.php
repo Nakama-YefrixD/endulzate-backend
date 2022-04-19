@@ -132,49 +132,117 @@ class entrada extends Controller
 
     public function destroy(Request $request)
     {
-        $producto = productos::where('codigo', $request->codigo)->first('id');
+
 
         try {
-        $cantidad = productos::join('almacenes', 'productos.id', '=', 'almacenes.producto_id')
-                                ->where([
-                                    ['productos.id', $producto->id],
-                                    ['almacenes.producto_id', $producto->id]
-                                ])
-                                ->first([
-                                    'productos.cantidad as pStock',
-                                    'productos.total    as pTotal',
-                                    'almacenes.stock    as aStock',
-                                    'almacenes.total    as aTotal'
-                                ]);
+        $entrada = entradas::find($request->id);
 
-        $condicion = productosEntradas::where('entrada_id', $request->id)->get('producto_id');
+        if($entrada){
+            
+            $productosEntradas = productosEntradas::join('productos as pro', 'pro.id', 'productosEntradas.producto_id')
+                                        ->where('productosEntradas.entrada_id', $request->id)
+                                        ->where('pro.codigo', $request->codigo)
+                                        ->where('productosEntradas.cantidad', $request->cantidad)
+                                        ->get([
+                                            'productosEntradas.id',
+                                            'pro.id as proid',
+                                            'productosEntradas.cantidad'
+                                        ]);
 
-        productos::find($producto->id)
-                    ->update([
-                        'cantidad' => $cantidad->pStock - $request->cantidad,
-                        'total'    => $cantidad->pTotal - $request->cantidad
-                    ]);
+            foreach($productosEntradas as $productoEntrada){
 
-        almacenes::where('producto_id', $producto->id)
-                    ->update([
-                        'stock' => $cantidad->aStock - $request->cantidad,
-                        'total' => $cantidad->aTotal - $request->cantidad
-                    ]);
+                $almacen = almacenes::where('sucursal_id', $entrada->sucursal_id)
+                                    ->where('producto_id', $productoEntrada->proid)
+                                    ->first();
 
-        productosEntradas::where([
-                            ['producto_id', $producto->id],
-                            ['entrada_id', $request->id]
-                        ])
-                        ->delete();
+                if($almacen){
+                    $almacen->stock = doubleval($almacen->stock) - doubleval($productoEntrada->cantidad);
+                    $almacen->total = doubleval($almacen->total) - doubleval($productoEntrada->cantidad);
+                    if($almacen->update()){
+                        $producto = productos::find($productoEntrada->proid);
+                        
+                        if($producto){
 
-        if (count($condicion) == 1) {
-            entradas::destroy($request->id);
+                            $producto->cantidad = doubleval($producto->cantidad) - doubleval($productoEntrada->cantidad);
+                            $producto->total = doubleval($producto->total) - doubleval($productoEntrada->cantidad);
+                            if($producto->update()){
+                                productosEntradas::where('id', $productoEntrada->id)->delete();
+                            }
+
+                        }else{
+
+                        }
+                    }
+                }
+
+            }
+
+            $productosEntradas = productosEntradas::join('productos as pro', 'pro.id', 'productosEntradas.producto_id')
+                                        ->where('productosEntradas.entrada_id', $request->id)
+                                        ->where('pro.codigo', $request->codigo)
+                                        ->where('productosEntradas.cantidad', $request->cantidad)
+                                        ->get([
+                                            'productosEntradas.id',
+                                            'pro.id as proid',
+                                            'productosEntradas.cantidad'
+                                        ]);
+
+            if(sizeof($productosEntradas) > 0){
+
+            }else{
+                entradas::destroy($request->id);
+            }
+
+
+        }else{
+
         }
+
+
+        
+
+        // $producto = productos::where('codigo', $request->codigo)->first('id');
+        // $cantidad = productos::join('almacenes', 'productos.id', '=', 'almacenes.producto_id')
+        //                         ->where([
+        //                             ['productos.id', $producto->id],
+        //                             ['almacenes.producto_id', $producto->id]
+        //                         ])
+        //                         ->first([
+        //                             'productos.cantidad as pStock',
+        //                             'productos.total    as pTotal',
+        //                             'almacenes.stock    as aStock',
+        //                             'almacenes.total    as aTotal'
+        //                         ]);
+
+        // $condicion = productosEntradas::where('entrada_id', $request->id)->get('producto_id');
+
+        // productos::find($producto->id)
+        //             ->update([
+        //                 'cantidad' => $cantidad->pStock - $request->cantidad,
+        //                 'total'    => $cantidad->pTotal - $request->cantidad
+        //             ]);
+
+        // almacenes::where('producto_id', $producto->id)
+        //             ->update([
+        //                 'stock' => $cantidad->aStock - $request->cantidad,
+        //                 'total' => $cantidad->aTotal - $request->cantidad
+        //             ]);
+
+        // productosEntradas::where([
+        //                     ['producto_id', $producto->id],
+        //                     ['entrada_id', $request->id]
+        //                 ])
+        //                 ->delete();
+
+        // if (count($condicion) == 1) {
+        //     entradas::destroy($request->id);
+        // }
 
         $rpta = array(
               'response'      =>  true,
-          );
-          echo json_encode($rpta);
+        );
+
+        echo json_encode($rpta);
       } catch (\Exception $e) {
 
           //echo $datosProducto;
