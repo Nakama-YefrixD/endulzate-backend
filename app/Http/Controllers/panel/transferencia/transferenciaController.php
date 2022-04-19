@@ -116,13 +116,13 @@ class transferenciaController extends Controller
         $cajaVentaDestino_id    = $request['idCajaVentaDestino'];
         $userOrigen_id          = $request['idUsuarioOrigen'];
         $userDestino_id         = $request['idUsuarioDestino'];
-        $cantidad               = $request['cantidad'];
+        $cantidad               = doubleval($request['cantidad']);
         $motivo                 = $request['motivo'];
         $estado                 = 0; // EL ESTADO SIEMPRE SERA 0
-        $antesOrigenCantidad    = $request['stockAntesOrigen'];
-        $despuesOrigenCantidad  = $request['stockDespuesOrigen'];
-        $antesDestinoCantidad   = $request['stockAntesDestino'];
-        $despuesDestinoCantidad = $request['stockDespuesDestino'];
+        $antesOrigenCantidad    = doubleval($request['stockAntesOrigen']);
+        $despuesOrigenCantidad  = doubleval($request['stockDespuesOrigen']);
+        $antesDestinoCantidad   = doubleval($request['stockAntesDestino']);
+        $despuesDestinoCantidad = doubleval($request['stockDespuesDestino']);
 
         DB::beginTransaction();
         try {
@@ -143,8 +143,8 @@ class transferenciaController extends Controller
                                                     'total'
                                                 ]);
                     if($almacenOrigen){
-                        $antesOrigenCantidad    = $almacenOrigen->stock;
-                        $despuesOrigenCantidad  = $almacenOrigen->stock + $cantidad;
+                        $antesOrigenCantidad    = doubleval($almacenOrigen->stock);
+                        $despuesOrigenCantidad  = doubleval($almacenOrigen->stock) + $cantidad;
                     }else{
                         $rpta = array(
                             'respuesta' => false,
@@ -211,8 +211,8 @@ class transferenciaController extends Controller
                                     ]);
             if($almacenDestino){
 
-                $antesDestinoCantidad   = $almacenDestino->stock;
-                $despuesDestinoCantidad = $almacenDestino->stock + $cantidad;
+                $antesDestinoCantidad   = doubleval($almacenDestino->stock);
+                $despuesDestinoCantidad = doubleval($almacenDestino->stock) + $cantidad;
                 
             }else{
                 $rpta = array(
@@ -243,9 +243,9 @@ class transferenciaController extends Controller
             $transferencia->fechaRecibido           = null;
             if($transferencia->save()){
 
-                $almacenDestino->stock = $almacenDestino->stock + $transferencia->cantidad;
-                $almacenDestino->total = $almacenDestino->total + $transferencia->cantidad;
-                $almacenDestino->transferenciarecibida = $almacenDestino->transferenciarecibida + $transferencia->cantidad;
+                $almacenDestino->stock = doubleval($almacenDestino->stock) + doubleval($transferencia->cantidad);
+                $almacenDestino->total = doubleval($almacenDestino->total) + doubleval($transferencia->cantidad);
+                $almacenDestino->transferenciarecibida = doubleval($almacenDestino->transferenciarecibida) + doubleval($transferencia->cantidad);
 
                 if($almacenDestino->update()){
                     $almacenOrigen = almacenes::where('producto_id', $idProducto)
@@ -257,8 +257,8 @@ class transferenciaController extends Controller
                                     ]);
                     if($almacenOrigen){
 
-                        $almacenOrigen->stock = $almacenOrigen->stock - $transferencia->cantidad;
-                        $almacenOrigen->transferenciarealizada = $almacenOrigen->transferenciarealizada - $transferencia->cantidad;
+                        $almacenOrigen->stock = doubleval($almacenOrigen->stock) - doubleval($transferencia->cantidad);
+                        $almacenOrigen->transferenciarealizada = doubleval($almacenOrigen->transferenciarealizada) - doubleval($transferencia->cantidad);
                         
                         if($almacenOrigen->update()){
                             DB::commit();
